@@ -160,11 +160,23 @@ filetype indent on
 " 取消补全内容以分割子窗口形式出现，只显示补全列表
 " set completeopt=longest,menu
 
-"cs add $curpwd/cscope.out $curpwd/
-let g:SuperTabRetainCompletionType=2
-let g:SuperTabDefaultCompletionType="<C-X><C-O>"
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+" set gtags
+set cscopetag " 使用 cscope 作为 tags 命令
+set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+"gtags.vim 设置项
+let GtagsCscope_Auto_Load = 1
+let CtagsCscope_Auto_Map = 1
+let GtagsCscope_Quiet = 1
 
+if filereadable("/usr/local/bin/gtags-cscope")
+    set csprg=/usr/local/bin/gtags-cscope
+    if filereadable("GTAGS")
+        cscope reset
+        cscope kill 0
+        cscope add GTAGS $PWD
+        cscope add GRTAGS $PWD
+    endif
+endif
 
 " VIM支持多种文本折叠方式，我VIM多用于编码，所以选择符合编程语言语法的代码折叠方式。
 " set foldmethod=syntax
@@ -172,8 +184,6 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 set nofen
 
 let cwd=""
-set tags=tags
-"cs add cscope.out 
 let g:miniBufExplMapWindowNavArrows = 1
 "允许光标在任何位置时用CTRL-TAB遍历buffer
 let g:miniBufExplMapCTabSwitchBufs = 1
