@@ -48,7 +48,13 @@ set sw=4
 set smartindent
 set showmatch        " Show matching brackets.
 set guioptions-=T
-set expandtab
+"set expandtab
+
+set list 
+set listchars=tab:>-,trail:-
+
+highlight WhitespaceEOL ctermbg=red guibg=darkgreen
+match WhitespaceEOL /\s\+$/
 
 let curpwd = getcwd()
 " vim自身命令行模式智能补全
@@ -269,10 +275,10 @@ func SetTitle()
         call setline(1, "/* ************************************************************************")
         call append(line("."),   "> File Name:     ".expand("%"))
         call append(line(".")+1, "> Author:        albert")
-        call append(line(".")+3, "> Created Time:  ".strftime("%c"))
-        call append(line(".")+4, "> Description:   ")
-        call append(line(".")+5, " ************************************************************************/")
-        call append(line(".")+6, "")
+        call append(line(".")+2, "> Created Time:  ".strftime("%c"))
+        call append(line(".")+3, "> Description:   ")
+        call append(line(".")+4, " ************************************************************************/")
+        call append(line(".")+5, "")
     endif
     "新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
