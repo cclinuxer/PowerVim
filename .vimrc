@@ -3,10 +3,34 @@
 " 定义快捷键的前缀，即<Leader>
 let mapleader=";"
 
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'mileszs/ack.vim'
+Plugin 'yggdroot/leaderf'
+
+Plugin 'ojroques/vim-oscyank', {'branch': 'main'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
 " pathogen plugin manager
 execute pathogen#infect()
 " syntax on
 filetype plugin indent on
+
 
 "高亮搜索关键词"
 let g:ackhighlight = 1
@@ -66,11 +90,17 @@ set noswapfile
 " 禁止光标闪烁
 " set gcr=a:block-blinkon0
 
-" ack搜索时不打开第一个搜索文件
-map <Leader>fw :Ack! <Space>
-" AckFile不打开第一个搜索文件
-map <Leader>ff :AckFile!<Space>
-" 定义快捷键 关闭当前分割窗口
+noremap <leader>f :LeaderfSelf<cr>
+noremap <leader>fm :LeaderfMru<cr>
+noremap <leader>ff :LeaderfFunction<cr>
+noremap <leader>fb :LeaderfBufTagAll<cr>
+noremap <leader>ft :LeaderfBufTag<cr>
+noremap <leader>fl :LeaderfLine<cr>
+noremap <leader>fw :LeaderfWindow<cr>
+let g:Lf_WorkingDirectoryMode = 'a'
+
+set clipboard=unnamed
+
 nmap <Leader>q :q<CR>
 " 定义快捷键
 nmap <Leader>w :w<CR>
@@ -166,6 +196,10 @@ filetype indent on
 " 取消补全内容以分割子窗口形式出现，只显示补全列表
 " set completeopt=longest,menu
 
+
+" ssh复制内容制内容到系统粘贴板
+nnoremap <Leader>u :OSCYankReg + <CR>
+
 " set gtags
 set cscopetag " 使用 cscope 作为 tags 命令
 set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
@@ -173,6 +207,7 @@ set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
 let GtagsCscope_Auto_Load = 1
 let CtagsCscope_Auto_Map = 1
 let GtagsCscope_Quiet = 1
+
 
 if filereadable("/usr/local/bin/gtags-cscope")
     set csprg=/usr/local/bin/gtags-cscope
@@ -244,6 +279,14 @@ set hlsearch
 " 开启语义分析
 syntax enable
 syntax on
+
+" 设置自动保存
+set autowrite
+
+" 突出显示当前行
+highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+
 " 使用ctrlc, v就可以实现vim之间的复制粘贴
 vnoremap <C-c> :w! ~/tmp/clipboard.txt <CR>
 inoremap <C-v> <Esc>:r ~/tmp/clipboard.txt <CR>
