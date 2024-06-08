@@ -63,10 +63,7 @@ set nocp
 
 "set encoding=utf-8
 ""set encoding=gb2312
-set langmenu=zh_CN.gb2312
-language message zh_CN.gb2312
 
-set fileencoding=gbk2312
 set ts=4
 set sw=4
 set smartindent
@@ -77,8 +74,11 @@ set guioptions-=T
 set list 
 set listchars=tab:>-,trail:-
 
-highlight WhitespaceEOL ctermbg=red guibg=darkgreen
-match WhitespaceEOL /\s\+$/
+augroup whitespace
+    autocmd!
+    autocmd BufWinEnter * highlight ExtraWhitespace ctermbg=red guibg=red
+    autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
+augroup END
 
 let curpwd = getcwd()
 " vim自身命令行模式智能补全
