@@ -28,6 +28,9 @@ if [ -d ~/.vim ]; then
     mv ~/.vim ~/.vim.`digitaldatetime`;
 fi
 
+echo "you must install vim-gtk for copy to system clipbord"
+sudo apt-get install vim-gtk2
+
 echo "\033[0;36mCopying .vimrc and .vim\033[0m"
 echo "\033[0;32mln -s ${PowerVim}/.vimrc .vimrc\033[0m"
 ln -s ${PowerVim}/.vimrc .vimrc
